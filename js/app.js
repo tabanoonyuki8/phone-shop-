@@ -33,23 +33,50 @@ phones.forEach(phone => { //forEach for no return
    phoneCard.innerHTML=`<figure><img src="${phone.image}" alt="Shoes" /></figure>
    <div class="card-body">
    <h2 class="card-title">${phone.brand}</h2>
-   <p>${phone.slug}</p>
-   <div class="card-actions justify-end">
-   <button class="btn btn-primary">Buy Now</button>
+   <p>${phone.phone_name}</p>
+   <div class="card-actions justify-center">
+   <button  onclick="showMore('${phone.slug}') " class="btn btn-primary">Show more</button>
    </div>
    </div>
    
    
    `;
    phoneContainer.appendChild(phoneCard);//
-})
+});
+//display none loading spinner
+ToggleSpinnerLoad(false);
 
+
+}
+//show more button click
+const showMore = async (id) => {
+   const res =await fetch(`
+   https://openapi.programming-hero.com/api/phone/${id}`);
+   const data=await res.json();
+
+ console.log(data);
 }
 //button handle
 const handleSrchBtn =() =>{
+   ToggleSpinnerLoad(true);
    //input flied
    const srchFiled=document.getElementById("input-filed");
    const srchValue=srchFiled.value;
    // console.log(srchValue);
+ 
    loadData(srchValue);//main funtion Api call
+
+   
+  
+
+}
+const ToggleSpinnerLoad =(isLoading)=>{
+ //spinner loading
+ const SpinnerLoad=document.getElementById('spinner');
+if(isLoading){
+   SpinnerLoad.classList.remove('hidden');
+}
+else{
+   SpinnerLoad.classList.add ('hidden');
+}
 }
