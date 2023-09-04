@@ -35,7 +35,8 @@ phones.forEach(phone => { //forEach for no return
    <h2 class="card-title">${phone.brand}</h2>
    <p>${phone.phone_name}</p>
    <div class="card-actions justify-center">
-   <button  onclick="showMore('${phone.slug}') " class="btn btn-primary">Show more</button>
+   <button  onclick="showMore('${phone.slug}');
+   show_my_modal.showModal() " class="btn btn-primary">Show more</button>
    </div>
    </div>
    
@@ -53,8 +54,20 @@ const showMore = async (id) => {
    const res =await fetch(`
    https://openapi.programming-hero.com/api/phone/${id}`);
    const data=await res.json();
+   const phone=data.data;
+   shoPhoneDisplay(phone);
 
- console.log(data);
+}
+//show more display
+const shoPhoneDisplay=(phone)=>{
+   console.log(phone);
+   const phoneName=document.getElementById("phoneName");
+   phoneName.innerHTML=`${phone.name}`;
+   const phoneDetails=document.getElementById("details");
+   phoneDetails.innerHTML=`${phone?.mainFeatures?.storage
+   } ${phone?.mainFeatures?.chipset || "no chipset"
+   }  `
+   show_my_modal.showModal();
 }
 //button handle
 const handleSrchBtn =() =>{
